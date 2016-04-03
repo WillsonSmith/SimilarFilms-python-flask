@@ -1,0 +1,20 @@
+{
+    "name": "localforage",
+    "version": "0.1.1",
+    "main": [
+        "dist/localforage.min.js"
+    ],
+    "ignore": [
+        ".travis.yml",
+        "CONTRIBUTING.md",
+        "LICENSE",
+        "test*",
+        "vendor/*"
+    ],
+    "dependencies": {
+        "es6-promise": "~0.1.1"
+    },
+    "devDependencies": {
+        "requirejs": "~2.1.10"
+    }
+}
