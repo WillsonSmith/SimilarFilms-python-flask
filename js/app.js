@@ -1,4 +1,4 @@
-picturefill();
+// picturefill();
 
 var setup = (function app(){
 
