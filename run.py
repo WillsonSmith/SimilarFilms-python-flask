@@ -8,8 +8,8 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     api_key = os.environ['APIKEY']
-    results = getData(path = "/3/movie/popular?api_key=a1ec39c4f3e5b788fb1ce58c719ab9cc").get("results")
-    return render_template("index.html", title = "Popular Films", results = getData(path = "/3/movie/popular?api_key=" + str(api_key)).get("results"))
+    results = getData(path = "/3/movie/popular?api_key=" + str(api_key)).get("results")
+    return render_template("index.html", title = "Popular Films", results = results)
 
 @app.route("/css/<path:path>")
 def send_css(path):
