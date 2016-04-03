@@ -11,6 +11,7 @@ def index():
     results = getData(path = "/3/movie/popular?api_key=" + str(api_key)).get("results")
     return render_template("index.html", title = "Popular Films", results = results)
 
+## Static file serving (for now)
 @app.route("/css/<path:path>")
 def send_css(path):
     return send_from_directory('css', path)
