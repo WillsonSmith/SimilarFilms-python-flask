@@ -1,6 +1,8 @@
+"""module used by SimilarFilms to retrieve data"""
 import requests
 
-def get_data(title="", path=""):
+def get_data(path=""):
+    """does the data fetch for the movie database json endpoint"""
     host = "api.themoviedb.org"
-    r = requests.get("https://" + host + path).json
-    return r()
+    response = requests.get("https://" + host + path).json
+    return response()
