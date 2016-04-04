@@ -10,4 +10,4 @@ Everything (at least on the front end) so far is a direct copy of the original a
 
 - I recommend using [pip](https://pip.pypa.io/en/stable/) for package management so you can do `pip install -r requirements`
 - I also recommend using [virtualenv](https://virtualenv.pypa.io/en/latest/) to manage an isolated python environment
-- If you use [fish shell](https://fishshell.com) like I do, you can use [virtualfish]((https://github.com/adambrenecki/virtualfish) as an alternative to virtualenv
+- If you use [fish shell](https://fishshell.com) like I do, you can use [virtualfish](https://github.com/adambrenecki/virtualfish) as an alternative to virtualenv
