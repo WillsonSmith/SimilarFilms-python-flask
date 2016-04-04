@@ -22,7 +22,7 @@ def mine():
     return render_template("mine.html", title = "My Favourites")
 
 ## Static file serving (for now)
-@app.route("/public_assets/<path:path>")
+@app.route("/assets/<path:path>")
 def send_assets(path):
     return send_from_directory('public_assets', path)
 
