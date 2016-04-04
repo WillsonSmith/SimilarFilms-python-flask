@@ -1,4 +1,7 @@
-"""SimilarFilms app runner"""
+"""
+This is the main app for running SimilarFilms. It contains all of the routes for
+the application. It is dependent on flask, os, and the locally defined get_data.
+"""
 import os
 
 from flask import Flask, render_template, send_from_directory
