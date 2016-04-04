@@ -22,13 +22,9 @@ def mine():
     return render_template("mine.html", title = "My Favourites")
 
 ## Static file serving (for now)
-@app.route("/css/<path:path>")
-def send_css(path):
-    return send_from_directory('css', path)
-
-@app.route("/js/<path:path>")
-def send_js(path):
-    return send_from_directory('js', path)
+@app.route("/public_assets/<path:path>")
+def send_assets(path):
+    return send_from_directory('public_assets', path)
 
 if __name__ == "__main__":
     app.run(debug=True)
