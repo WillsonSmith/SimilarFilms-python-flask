@@ -2,29 +2,31 @@
 
 var setup = (function app() {
 
+
+  function checkFavStatus(value) {
+    var film;
+
+    results.forEach(function(result) {
+      film = result.getAttribute('data-film');
+
+      value.results.forEach(function(valueResult) {
+        if (film === valueResult) {
+          result.querySelector('.icon-heart').classList.remove('hidden');
+          result.querySelector('.icon-heart2').classList.add('hidden');
+        }
+      });
+    });
+  }
+
+  function setItem(element) {
+    element.querySelector('.icon-heart').classList.toggle('hidden');
+    element.querySelector('.icon-heart2').classList.toggle('hidden');
+  }
+
   return {
     init: function() {
       var favourited,
           results = document.querySelectorAll('.result');
-
-      function checkFavStatus(value) {
-        var film;
-
-        results.forEach(function(result) {
-          film = result.getAttribute('data-film');
-          value.results.forEach(function(valueResult) {
-            if (film === valueResult) {
-              result.querySelector('.icon-heart').classList.remove('hidden');
-              result.querySelector('.icon-heart2').classList.add('hidden');
-            }
-          });
-        });
-      }
-
-      function setItem(element) {
-        element.querySelector('.icon-heart').classList.toggle('hidden');
-        element.querySelector('.icon-heart2').classList.toggle('hidden');
-      }
 
       function addFavourite(item, id, rating, url) {
         favourited.results.push(item);
