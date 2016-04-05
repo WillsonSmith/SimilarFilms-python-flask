@@ -39,6 +39,7 @@ var setup = (function app() {
       }
 
       function clickEvent(e) {
+
         var film = this.getAttribute('data-film'),
             id = this.getAttribute('data-id'),
             rating = this.getAttribute('data-rating'),

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "babel ./js/similarfilmsTest.js --source-maps --out-file ./test/similarfilmsTests.js && mocha",
     "babel": "babel ./js/similarfilms.js --source-maps --watch --out-file ../public_assets/js/similarfilms.js",
-    "webpack": "webpack"
+    "webpack": "webpack",
+    "webpack-watch": "webpack --watch"
   },
   "author": "= <=> (https://willsonsmith.com)",
   "license": "MIT",

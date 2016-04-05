@@ -56,19 +56,29 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var test = (0, _dispatcher2.default)();
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-	function logData(data) {
+	var similarFilmsStore = (0, _smallDataStore2.default)();
+	var favouriteStore = similarFilmsStore.new();
+
+	var voteDispatcher = (0, _dispatcher2.default)();
+
+	function sendVote(data) {
+	  console.log('test');
 	  console.log(data);
 	}
 
-	test.register('event', logData);
+	voteDispatcher.register("vote", sendVote);
 
-	test.dispatch({
-	  type: 'event',
-	  data: {
-	    data: 'test'
-	  }
+	[].concat(_toConsumableArray(document.querySelectorAll('.result'))).forEach(function (result) {
+	  result.querySelector('.fav').addEventListener('click', function (fav) {
+	    voteDispatcher.dispatch({
+	      type: "vote",
+	      data: {
+	        value: true
+	      }
+	    });
+	  });
 	});
 
 /***/ },
