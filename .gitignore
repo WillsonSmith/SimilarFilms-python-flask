@@ -1,3 +1,4 @@
 start
 node_modules
 dev_assets/node_modules
+npm-debug.log
