@@ -50,36 +50,58 @@
 
 	var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
-	var _smallDataStore = __webpack_require__(2);
+	var _eventEmitter = __webpack_require__(2);
 
-	var _smallDataStore2 = _interopRequireDefault(_smallDataStore);
+	var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-	var similarFilmsStore = (0, _smallDataStore2.default)();
-	var favouriteStore = similarFilmsStore.new();
+	var body = document.getElementsByTagName('body')[0];
 
 	var voteDispatcher = (0, _dispatcher2.default)();
 
-	function sendVote(data) {
-	  console.log('test');
+	function logDataResult(data) {
 	  console.log(data);
 	}
 
-	voteDispatcher.register("vote", sendVote);
+	function addRemoveFavourite(_ref) {
+	  var _ref$alreadyActive = _ref.alreadyActive;
+	  var alreadyActive = _ref$alreadyActive === undefined ? false : _ref$alreadyActive;
+	  var _ref$movie = _ref.movie;
+	  var movie = _ref$movie === undefined ? {} : _ref$movie;
 
-	[].concat(_toConsumableArray(document.querySelectorAll('.result'))).forEach(function (result) {
-	  result.querySelector('.fav').addEventListener('click', function (fav) {
+	  if (alreadyActive) {
+	    localforage.removeItem('favourited', logDataResult);
+	  } else {
+	    localforage.setItem('favourited', movie, logDataResult);
+	  }
+	}
+
+	function updateVote(data) {
+	  var isActive = data.node.classList.contains('movie-result__heart--is-active');
+	  console.log(isActive);
+	  addRemoveFavourite({ alreadyActive: isActive, movie: data.movie });
+	  data.node.classList.toggle('movie-result__heart--is-active');
+	}
+
+	function handleVoteClick(event) {
+	  var target = event.target;
+	  if (target.classList.contains('movie-result__heart')) {
 	    voteDispatcher.dispatch({
-	      type: "vote",
-	      data: {
-	        value: true
+	      type: 'vote',
+	      node: target,
+	      movie: {
+	        film: target.getAttribute('data-film'),
+	        id: target.getAttribute('data-id'),
+	        rating: target.getAttribute('data-rating'),
+	        image: target.getAttribute('data-image')
 	      }
 	    });
-	  });
-	});
+	  }
+	}
+
+	voteDispatcher.register('vote', updateVote);
+	body.addEventListener('click', handleVoteClick);
 
 /***/ },
 /* 1 */
@@ -127,57 +149,56 @@
 /* 2 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	function smallDataStore(instantInitiator) {
-
-	  var groupedStores = [];
-	  var storeActions = function storeActions(object) {
-	    var store = object;
-
-	    return {
-	      get: function get(key) {
-	        return store[key];
-	      },
-	      set: function set(key, value) {
-	        store[key] = value;
-	        return store[key];
-	      },
-	      keys: function keys() {
-	        return Object.keys(store);
-	      },
-	      update: function update(key, callback) {
-	        callback(store[key]);
-	        return store[key];
+	exports.default = EventEmitter;
+	function EventEmitter() {
+	  var events = {};
+	  var EventsHandlers = {
+	    bind: function bind(event, callback) {
+	      if (!events[event]) {
+	        events[event] = [];
 	      }
-	    };
-	  };
-	  var newStore = function newStore() {
-	    var initial = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	      events[event].push(callback);
+	    },
+	    unbind: function unbind(event, callback) {
+	      events[event] = events[event].filter(function (event) {
+	        return event !== callback;
+	      });
+	    },
+	    trigger: function trigger(event) {
+	      var _this = this;
 
-	    var store = initial;
-	    var actions = storeActions(store);
-	    groupedStores.push(actions);
-	    return actions;
-	  };
+	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        args[_key - 1] = arguments[_key];
+	      }
 
-	  if (instantInitiator) {
-	    return newStore(instantInitiator);
-	  }
+	      events[event].forEach(function (event) {
+	        return event.apply.apply(event, [_this].concat(args));
+	      });
+	    }
+	  };
 
 	  return {
-	    storeGroup: function storeGroup() {
-	      return groupedStores;
-	    },
-
-	    new: newStore
+	    mixin: function mixin(toObject) {
+	      var handlers = ['bind', 'unbind', 'trigger'];
+	      if (typeof toObject === 'function') {
+	        handlers.forEach(function (handler) {
+	          return toObject.prototype[handler] = EventsHandlers[handler];
+	        });
+	      } else {
+	        handlers.forEach(function (handler) {
+	          return toObject[handler] = EventsHandlers[handler];
+	        });
+	      }
+	      // When there is more support, the above can be replace with Object.assign
+	      // Object.assign(toObject, EventsHandlers);
+	    }
 	  };
 	}
-
-	exports.default = smallDataStore;
 
 /***/ }
 /******/ ]);

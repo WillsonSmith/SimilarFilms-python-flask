@@ -9,18 +9,18 @@
 
 <div class="container group">
   {% for result in results %}
-    <div class="movie-result data-film='{{ result.title }}' data-id='{{ result.id }}'">
+    <div class="movie-result">
       <div class="movie-result__tweet">
         <a href="http://twitter.com/home/?status=I'm watching {{ result.title }} because of http://similarfilms.com">Tweet</a>
       </div>
       <a href="/similar/{{result.id}}" class="movie-result__image-link">
         <img src="http://image.tmdb.org/t/p/w300/{{result.poster_path}}" alt="{{result.title}}" class="movie-result__image">
       </a>
-      <div class="movie-result__title">{{ result.title }}</div>
+      <div class="title">{{ result.title }}</div>
       <div class="movie-result__rating-group">
         <div class="movie-result__rating">{{ result.vote_average }}</div>
-        <div class="movie-result__favourite-button" data-film="{{ result.title }}" data-id="{{ result.id }}" data-rating="{{ result.vote_average }}" data-image="{{ result.poster_path }}">
-          <button class="movie-result__heart">
+        <div class="movie-result__favourite-button">
+          <button class="movie-result__heart" data-film="{{ result.title }}" data-id="{{ result.id }}" data-rating="{{ result.vote_average }}" data-image="{{ result.poster_path }}">
             <svg viewBox="0 0 32 32">
               <use xlink:href="#icon-heart"></use>
             </svg>

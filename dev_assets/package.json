@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "willson-smith-es2015-dispatcher": "^1.0.2",
+    "willson-smith-es2015-event-emitter": "^1.0.0",
     "willson-smith-es2015-small-data-store": "^1.0.0"
   }
 }

@@ -49,5 +49,10 @@ body {
   svg {
     width: 15px;
     height: 15px;
+    pointer-events: none;
   }
+}
+
+.movie-result__heart--is-active {
+  fill: #e74c3c;
 }

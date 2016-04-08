@@ -28,11 +28,11 @@ var builder = (function() {
 
     setData: function(element, data) {
 
-      var link = element.querySelector('.simLink'),
+      var link = element.querySelector('.movie-result__image-link'),
           elTitle = element.querySelector('.title'),
-          elRating = element.querySelector('.rating'),
+          elRating = element.querySelector('.movie-result__rating'),
 
-          elFav = element.querySelector('.fav'),
+          elFav = element.querySelector('.movie-result__heart'),
 
           img = document.createElement('img'),
           film = data.title,
@@ -41,6 +41,7 @@ var builder = (function() {
           imageBaseURL = 'http://image.tmdb.org/t/p/w300/',
           image = data.posterURL;
 
+          img.classList.add('movie-result__image');
           img.src = imageBaseURL + image;
           link.appendChild(img);
           link.setAttribute('href', '/similar/' + id);
@@ -124,4 +125,4 @@ var builder = (function() {
 
 
 builder.prepEvents();
-builder.makeResult(document.querySelector('.result'));
+builder.makeResult(document.querySelector('.movie-result'));
