@@ -2,7 +2,7 @@ import Dispatcher from 'willson-smith-es2015-dispatcher/dispatcher';
 import smallDataStore from 'willson-smith-es2015-small-data-store/smallDataStore';
 
 let similarFilmsStore = smallDataStore();
-let favouriteStore = similarFilmsStore.new();
+let favouriteStore = similarFilmsStore.new(); //for each?
 
 let voteDispatcher = Dispatcher();
 

@@ -1,0 +1,53 @@
+body {
+  background: #2c3e50;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.movie-result {
+  font-weight: 300;
+  background: #fff;
+  flex: 0 1 350px;
+  padding: 15px;
+  margin: 15px;
+}
+
+.movie-result__image-link {
+  display: block;
+  margin-top: 15px;
+}
+
+.movie-result__title {
+  margin-top: 15px;
+  font-size: 20px;
+}
+
+.movie-result__image {
+  width: 100%;
+}
+
+.movie-result__rating-group {
+  display: flex;
+}
+
+.movie-result__rating {
+  flex: 1 1 auto;
+}
+
+.movie-result__heart {
+  background: none;
+  border: none;
+  cursor: pointer;
+  fill: #3c3c3c;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+}
