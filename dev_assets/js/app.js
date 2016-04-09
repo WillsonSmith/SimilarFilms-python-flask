@@ -5,6 +5,9 @@ let body = document.getElementsByTagName('body')[0];
 
 let voteDispatcher = Dispatcher();
 
+let movieDataStore = {
+}
+
 function logDataResult(data) {
   console.log(data);
 }
