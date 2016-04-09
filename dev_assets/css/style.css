@@ -28,6 +28,7 @@ body {
 .search-field {
   background: #fff;
   padding: 10px;
+  box-shadow: 0 0.4em 1em -1em rgba(0, 0, 0, 0.6);
 }
 
 .search-field__form {
@@ -44,7 +45,7 @@ body {
   flex: 2 1 auto;
   padding-left: 10px;
   border-radius: 3px 0 0 3px;
-  border: 1px solid #2c3e50;
+  border: 1px solid #00B7FF;
   border-right: 0;
 }
 .search-field__submit {
