@@ -9,13 +9,14 @@ let movieStore = {
   movies: {}
 }
 
+let movieStoreEvents = EventEmitter();
+movieStoreEvents.mixin(movieStore);
+movieStore.bind('update', function() {
+  localforage.setItem('favourited', movieStore.movies, logDataResult);
+});
+
 localforage.getItem('favourited', function(data) {
   movieStore.movies = data;
-  let movieStoreEvents = EventEmitter();
-  movieStoreEvents.mixin(movieStore);
-  movieStore.bind('update', function() {
-    localforage.setItem('favourited', movieStore.movies, logDataResult);
-  });
   Object.keys(movieStore.movies).forEach(function(key) {
     if (movieStore.movies[key]) {
       document.querySelector(`[data-id='${key}']`).classList.add('movie-result__heart--is-active');
