@@ -50,9 +50,9 @@
 
 	var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
-	var _eventEmitter = __webpack_require__(2);
+	var _movieStore = __webpack_require__(4);
 
-	var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
+	var _movieStore2 = _interopRequireDefault(_movieStore);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -60,28 +60,27 @@
 
 	var voteDispatcher = (0, _dispatcher2.default)();
 
-	function logDataResult(data) {
-	  console.log(data);
-	}
-
-	function addRemoveFavourite(_ref) {
-	  var _ref$alreadyActive = _ref.alreadyActive;
-	  var alreadyActive = _ref$alreadyActive === undefined ? false : _ref$alreadyActive;
-	  var _ref$movie = _ref.movie;
-	  var movie = _ref$movie === undefined ? {} : _ref$movie;
-
-	  if (alreadyActive) {
-	    localforage.removeItem('favourited', logDataResult);
-	  } else {
-	    localforage.setItem('favourited', movie, logDataResult);
-	  }
-	}
+	localforage.getItem('favourited', function (data) {
+	  _movieStore2.default.movies = data;
+	  Object.keys(_movieStore2.default.movies).forEach(function (key) {
+	    var movieItem = document.querySelector('[data-id=\'' + key + '\']');
+	    if (_movieStore2.default.movies[key] && movieItem) {
+	      movieItem.classList.add('movie-result__heart--is-active');
+	    }
+	  });
+	});
 
 	function updateVote(data) {
 	  var isActive = data.node.classList.contains('movie-result__heart--is-active');
-	  console.log(isActive);
-	  addRemoveFavourite({ alreadyActive: isActive, movie: data.movie });
+	  var movieExists = _movieStore2.default.movies[data.movie.id];
+	  if (movieExists) {
+	    _movieStore2.default.movies[data.movie.id] = null;
+	  } else {
+	    _movieStore2.default.movies[data.movie.id] = data.movie;
+	  }
+
 	  data.node.classList.toggle('movie-result__heart--is-active');
+	  _movieStore2.default.trigger('update');
 	}
 
 	function handleVoteClick(event) {
@@ -199,6 +198,38 @@
 	    }
 	  };
 	}
+
+/***/ },
+/* 3 */,
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _eventEmitter = __webpack_require__(2);
+
+	var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var movieStore = {
+	  movies: {}
+	};
+
+	function logDataResult(data) {
+	  console.log(data);
+	}
+
+	var movieStoreEvents = (0, _eventEmitter2.default)();
+	movieStoreEvents.mixin(movieStore);
+	movieStore.bind('update', function () {
+	  localforage.setItem('favourited', movieStore.movies, logDataResult);
+	});
+	exports.default = movieStore;
 
 /***/ }
 /******/ ]);
