@@ -1,7 +1,6 @@
 import Dispatcher from 'willson-smith-es2015-dispatcher/dispatcher'
 import movieStore from './modules/movieStore'
 
-console.log(movieStore)
 let body = document.getElementsByTagName('body')[0];
 
 let voteDispatcher = Dispatcher();
@@ -9,16 +8,23 @@ let voteDispatcher = Dispatcher();
 localforage.getItem('favourited', function(data) {
   movieStore.movies = data;
   Object.keys(movieStore.movies).forEach(function(key) {
-    if (movieStore.movies[key]) {
-      document.querySelector(`[data-id='${key}']`).classList.add('movie-result__heart--is-active');
+    let movieItem = document.querySelector(`[data-id='${key}']`);
+    if (movieStore.movies[key] && movieItem) {
+      movieItem.classList.add('movie-result__heart--is-active');
     }
   });
 });
 
 function updateVote(data) {
   let isActive = data.node.classList.contains('movie-result__heart--is-active');
+  let movieExists = movieStore.movies[data.movie.id];
+  if (movieExists) {
+    movieStore.movies[data.movie.id] = null;
+  } else {
+    movieStore.movies[data.movie.id] = data.movie;
+  }
+
   data.node.classList.toggle('movie-result__heart--is-active');
-  movieStore.movies[data.movie.id] ? movieStore.movies[data.movie.id] = null : movieStore.movies[data.movie.id] = data.movie;
   movieStore.trigger('update');
 }
 
