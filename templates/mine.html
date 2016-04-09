@@ -1,16 +1,7 @@
 {% extends "layout/layout_main.html" %}
 
 {% block body %}
-  <nav class="navigation">
-    <ul class="connected-wrapper">
-      <li class="connected-wrapper__item">
-        <a href="/">Home</a>
-      </li>
-      <li class="connected-wrapper__item connected-wrapper__item--is-active">
-        <a href="/mine">Mine</a>
-      </li>
-    </ul>
-  </nav>
+  {% include "partials/navigation.html" %}
 
   <div class="container group" id="resultId">
     <div class="movie-result">
