@@ -1,0 +1,9 @@
+{
+  "use": ["autoprefixer", "postcss-nested", "cssnano"],
+  "input": "./css/style.css",
+  "output": "../public_assets/css/bundle.css",
+  "local-plugins": true,
+  "autoprefixer": {
+    "browsers": ">5%"
+  }
+}
