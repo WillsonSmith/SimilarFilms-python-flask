@@ -1,19 +1,10 @@
-import Dispatcher from 'willson-smith-es2015-dispatcher/dispatcher';
-import EventEmitter from 'willson-smith-es2015-event-emitter/eventEmitter';
+import Dispatcher from 'willson-smith-es2015-dispatcher/dispatcher'
+import movieStore from './modules/movieStore'
 
+console.log(movieStore)
 let body = document.getElementsByTagName('body')[0];
 
 let voteDispatcher = Dispatcher();
-
-let movieStore = {
-  movies: {}
-}
-
-let movieStoreEvents = EventEmitter();
-movieStoreEvents.mixin(movieStore);
-movieStore.bind('update', function() {
-  localforage.setItem('favourited', movieStore.movies, logDataResult);
-});
 
 localforage.getItem('favourited', function(data) {
   movieStore.movies = data;
@@ -23,10 +14,6 @@ localforage.getItem('favourited', function(data) {
     }
   });
 });
-
-function logDataResult(data) {
-  console.log(data);
-}
 
 function updateVote(data) {
   let isActive = data.node.classList.contains('movie-result__heart--is-active');
