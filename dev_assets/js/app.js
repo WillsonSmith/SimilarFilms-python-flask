@@ -5,26 +5,33 @@ let body = document.getElementsByTagName('body')[0];
 
 let voteDispatcher = Dispatcher();
 
-let movieDataStore = {
+let movieStore = {
+  movies: {}
 }
+
+localforage.getItem('favourited', function(data) {
+  movieStore.movies = data;
+  let movieStoreEvents = EventEmitter();
+  movieStoreEvents.mixin(movieStore);
+  movieStore.bind('update', function() {
+    localforage.setItem('favourited', movieStore.movies, logDataResult);
+  });
+  Object.keys(movieStore.movies).forEach(function(key) {
+    if (movieStore.movies[key]) {
+      document.querySelector(`[data-id='${key}']`).classList.add('movie-result__heart--is-active');
+    }
+  });
+});
 
 function logDataResult(data) {
   console.log(data);
 }
 
-function addRemoveFavourite({ alreadyActive = false, movie = {}}) {
-  if (alreadyActive) {
-    localforage.removeItem('favourited', logDataResult);
-  } else {
-    localforage.setItem('favourited', movie, logDataResult);
-  }
-}
-
 function updateVote(data) {
   let isActive = data.node.classList.contains('movie-result__heart--is-active');
-  console.log(isActive)
-  addRemoveFavourite({alreadyActive: isActive, movie: data.movie});
   data.node.classList.toggle('movie-result__heart--is-active');
+  movieStore.movies[data.movie.id] ? movieStore.movies[data.movie.id] = null : movieStore.movies[data.movie.id] = data.movie;
+  movieStore.trigger('update');
 }
 
 function handleVoteClick(event) {
