@@ -1,7 +1,7 @@
 <div class="search-field">
-  <form class="search-field__form" method="post" action="/search/">
+  <form class="search-field__form" method="post" action="/search">
     <label class="visually-hidden" for="Search-Field__Search-Box">Search for a film</label>
-    <input type="text" id="Search-Field__Search-Box" name="searchbox" placeholder="search film" class="search-field__text">
+    <input type="text" id="Search-Field__Search-Box" name="search" placeholder="search film" class="search-field__text">
     <input type="submit" class="search-field__submit" value="Find Movie">
   </form>
 </div>
@@ -12,7 +12,7 @@
       <div class="movie-result__tweet">
         <a href="http://twitter.com/home/?status=I'm watching {{ result.title }} because of http://similarfilms.com">Tweet</a>
       </div>
-      <a href="/similar/{{result.id}}" class="movie-result__image-link">
+      <a href="{{url_for('similar', movie_id=result.id)}}" class="movie-result__image-link">
         <img src="http://image.tmdb.org/t/p/w300/{{result.poster_path}}" alt="{{result.title}}" class="movie-result__image">
       </a>
       <div class="title">{{ result.title }}</div>
