@@ -23,6 +23,12 @@ def similar(movie_id):
     results = get_data(path='/3/movie/' + str(movie_id) + '/similar_movies?api_key=' + str(API_KEY)).get("results")
     return render_template("similar.html", title="Similar To " + str(movie_id), results=results)
 
+@app.route("/search/<string:movie_name>")
+def search(movie_name):
+    """render /search/#"""
+    results = get_data(path='/3/search/movie?query=' + str(movie_name) + '&api_key=' + str(API_KEY)).get("results")
+    return render_template("search.html", title="Similar To " + str(movie_name), results=results)
+
 @app.route("/mine")
 def mine():
     """render the favourites page"""
