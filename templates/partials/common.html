@@ -1,12 +1,11 @@
-{% include "partials/title.html" %}
-
-<div class="searchField">
-  <form class="searchForm" method="post" action="/search/" placeholder="search film">
-    <input type="text" name="searchbox" class="searchBox">
-    <input type="submit" class="submitButton" value="Find Movie">
+<div class="search-field">
+  <form class="search-field__form" method="post" action="/search/">
+    <label class="visually-hidden" for="Search-Field__Search-Box">Search for a film</label>
+    <input type="text" id="Search-Field__Search-Box" name="searchbox" placeholder="search film" class="search-field__text">
+    <input type="submit" class="search-field__submit" value="Find Movie">
   </form>
 </div>
-
+{% include "partials/title.html" %}
 <div class="container group">
   {% for result in results %}
     <div class="movie-result">
