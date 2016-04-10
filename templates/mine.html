@@ -4,14 +4,15 @@
   {% include "partials/navigation.html" %}
 
   <div class="container group" id="resultId">
-    <div class="movie-result">
+    <div class="movie-result" data-build-template>
       <a href="/similar/" class="movie-result__image-link">
+        <img data-build-image class="movie-result__image">
       </a>
-      <div class="title"></div>
+      <div class="title" data-build-film></div>
       <div class="movie-result__rating-group">
-        <div class="movie-result__rating"></div>
+        <div class="movie-result__rating" data-build-rating></div>
         <div class="movie-result__favourite-button">
-          <button class="movie-result__heart" data-film="" data-id="" data-rating="" data-image="">
+          <button class="movie-result__heart movie-result__heart--is-active" data-build-fill-attrs data-film="" data-id="" data-rating="" data-image="">
             <svg viewBox="0 0 32 32">
               <use xlink:href="#icon-heart"></use>
             </svg>
@@ -33,8 +34,4 @@
       <p>Having troubles? Try deleting your saved films.</p>
     </div>
   </div>
-{% endblock %}
-
-{% block additional_scripts %}
-  <script type="text/javascript" src="/assets/js/builder.js"></script>
 {% endblock %}
