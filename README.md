@@ -2,9 +2,8 @@
 
 **This is incomplete - the app works but has several bugs**
 
-This is the initial round of porting over [SimilarFilms](https://github.com/willsonsmith/similarfilms) to the Python Based [Flask](http://flask.pocoo.org) web framework. It is an experiment and currently has a number of visual bugs and legacy code. Still worth a look for educational purposes.
-
-Everything (at least on the front end) so far is a direct copy of the original application, with a few bugs. There is leftover commented out code that is unnecessary.
+This is the initial round of porting over [SimilarFilms](https://github.com/willsonsmith/similarfilms) to the Python Based [Flask](http://flask.pocoo.org) web framework.
+While currently in development, it has all the major feature of the original. Currently you cannot back up or delete all of your saved films. There is still cleanup and minor refactoring to do for some code.
 
 ### Some additional notes
 
