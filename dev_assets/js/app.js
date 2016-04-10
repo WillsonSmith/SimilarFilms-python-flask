@@ -6,15 +6,16 @@ let body = document.getElementsByTagName('body')[0];
 
 let voteDispatcher = Dispatcher();
 
+function setAlreadyFavourited(key) {
+  let movieItem = document.querySelector(`[data-id='${key}']`);
+  if (movieStore.movies[key] && movieItem) {
+    movieItem.classList.add('movie-result__heart--is-active');
+}
+
 localforage.getItem('favourited', function(data) {
   movieStore.movies = data || {};
   let movieStoreKeys = Object.keys(movieStore.movies);
-  movieStoreKeys.forEach(function(key) {
-    let movieItem = document.querySelector(`[data-id='${key}']`);
-    if (movieStore.movies[key] && movieItem) {
-      movieItem.classList.add('movie-result__heart--is-active');
-    }
-  });
+  movieStoreKeys.forEach(setAlreadyFavourited);
 
   let buildTemplate = document.querySelector('[data-build-template]');
   if (buildTemplate) {
