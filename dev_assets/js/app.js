@@ -10,6 +10,7 @@ function setAlreadyFavourited(key) {
   let movieItem = document.querySelector(`[data-id='${key}']`);
   if (movieStore.movies[key] && movieItem) {
     movieItem.classList.add('movie-result__heart--is-active');
+  }
 }
 
 localforage.getItem('favourited', function(data) {

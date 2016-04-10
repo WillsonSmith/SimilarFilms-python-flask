@@ -64,15 +64,17 @@
 
 	var voteDispatcher = (0, _dispatcher2.default)();
 
+	function setAlreadyFavourited(key) {
+	  var movieItem = document.querySelector('[data-id=\'' + key + '\']');
+	  if (_movieStore2.default.movies[key] && movieItem) {
+	    movieItem.classList.add('movie-result__heart--is-active');
+	  }
+	}
+
 	localforage.getItem('favourited', function (data) {
 	  _movieStore2.default.movies = data || {};
 	  var movieStoreKeys = Object.keys(_movieStore2.default.movies);
-	  movieStoreKeys.forEach(function (key) {
-	    var movieItem = document.querySelector('[data-id=\'' + key + '\']');
-	    if (_movieStore2.default.movies[key] && movieItem) {
-	      movieItem.classList.add('movie-result__heart--is-active');
-	    }
-	  });
+	  movieStoreKeys.forEach(setAlreadyFavourited);
 
 	  var buildTemplate = document.querySelector('[data-build-template]');
 	  if (buildTemplate) {
