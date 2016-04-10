@@ -1,18 +1,26 @@
-import Dispatcher from 'willson-smith-es2015-dispatcher/dispatcher'
-import movieStore from './modules/movieStore'
+import Dispatcher from 'willson-smith-es2015-dispatcher/dispatcher';
+import movieStore from './modules/movieStore';
+import builder from './build';
 
 let body = document.getElementsByTagName('body')[0];
 
 let voteDispatcher = Dispatcher();
 
+function setAlreadyFavourited(key) {
+  let movieItem = document.querySelector(`[data-id='${key}']`);
+  if (movieStore.movies[key] && movieItem) {
+    movieItem.classList.add('movie-result__heart--is-active');
+}
+
 localforage.getItem('favourited', function(data) {
-  movieStore.movies = data;
-  Object.keys(movieStore.movies).forEach(function(key) {
-    let movieItem = document.querySelector(`[data-id='${key}']`);
-    if (movieStore.movies[key] && movieItem) {
-      movieItem.classList.add('movie-result__heart--is-active');
-    }
-  });
+  movieStore.movies = data || {};
+  let movieStoreKeys = Object.keys(movieStore.movies);
+  movieStoreKeys.forEach(setAlreadyFavourited);
+
+  let buildTemplate = document.querySelector('[data-build-template]');
+  if (buildTemplate) {
+    builder(buildTemplate, movieStoreKeys.map((key) => movieStore.movies[key]));
+  }
 });
 
 function updateVote(data) {

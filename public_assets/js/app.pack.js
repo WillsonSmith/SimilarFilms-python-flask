@@ -50,9 +50,13 @@
 
 	var _dispatcher2 = _interopRequireDefault(_dispatcher);
 
-	var _movieStore = __webpack_require__(4);
+	var _movieStore = __webpack_require__(2);
 
 	var _movieStore2 = _interopRequireDefault(_movieStore);
+
+	var _build = __webpack_require__(4);
+
+	var _build2 = _interopRequireDefault(_build);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61,13 +65,21 @@
 	var voteDispatcher = (0, _dispatcher2.default)();
 
 	localforage.getItem('favourited', function (data) {
-	  _movieStore2.default.movies = data;
-	  Object.keys(_movieStore2.default.movies).forEach(function (key) {
+	  _movieStore2.default.movies = data || {};
+	  var movieStoreKeys = Object.keys(_movieStore2.default.movies);
+	  movieStoreKeys.forEach(function (key) {
 	    var movieItem = document.querySelector('[data-id=\'' + key + '\']');
 	    if (_movieStore2.default.movies[key] && movieItem) {
 	      movieItem.classList.add('movie-result__heart--is-active');
 	    }
 	  });
+
+	  var buildTemplate = document.querySelector('[data-build-template]');
+	  if (buildTemplate) {
+	    (0, _build2.default)(buildTemplate, movieStoreKeys.map(function (key) {
+	      return _movieStore2.default.movies[key];
+	    }));
+	  }
 	});
 
 	function updateVote(data) {
@@ -146,6 +158,37 @@
 
 /***/ },
 /* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _eventEmitter = __webpack_require__(3);
+
+	var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var movieStore = {
+	  movies: {}
+	};
+
+	function logDataResult(data) {
+	  console.log(data);
+	}
+
+	var movieStoreEvents = (0, _eventEmitter2.default)();
+	movieStoreEvents.mixin(movieStore);
+	movieStore.bind('update', function () {
+	  localforage.setItem('favourited', movieStore.movies, logDataResult);
+	});
+	exports.default = movieStore;
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -200,36 +243,65 @@
 	}
 
 /***/ },
-/* 3 */,
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.default = builder;
+	var fragment = document.createDocumentFragment();
 
-	var _eventEmitter = __webpack_require__(2);
-
-	var _eventEmitter2 = _interopRequireDefault(_eventEmitter);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var movieStore = {
-	  movies: {}
-	};
-
-	function logDataResult(data) {
-	  console.log(data);
+	function cloneNode(node) {
+	  return node.cloneNode(true);
 	}
 
-	var movieStoreEvents = (0, _eventEmitter2.default)();
-	movieStoreEvents.mixin(movieStore);
-	movieStore.bind('update', function () {
-	  localforage.setItem('favourited', movieStore.movies, logDataResult);
-	});
-	exports.default = movieStore;
+	function fillAttributes(node, data) {
+	  return function (key) {
+	    var dataKey = 'data-' + key;
+	    var nodeHasAttribute = node.hasAttribute(dataKey);
+	    if (nodeHasAttribute) {
+	      node.setAttribute(dataKey, data[key]);
+	    }
+	  };
+	}
+
+	function buildNewItem(node) {
+	  return function (data) {
+	    if (data) {
+	      var tempNode = cloneNode(node);
+	      var fillAttrsNode = tempNode.querySelector('[data-build-fill-attrs]');
+	      var dataKeys = Object.keys(data);
+	      dataKeys.forEach(fillData(tempNode, data));
+	      if (fillAttrsNode) {
+	        dataKeys.forEach(fillAttributes(fillAttrsNode, data));
+	      }
+	      fragment.appendChild(tempNode);
+	    }
+	  };
+	}
+
+	function fillData(node, data) {
+	  return function (key) {
+	    var buildKey = node.querySelector('[data-build-' + key + ']');
+	    if (buildKey) {
+	      if (buildKey.tagName === "IMG") {
+	        buildKey.src = 'http://image.tmdb.org/t/p/w300' + data[key];
+	      } else {
+	        buildKey.textContent = data[key];
+	      }
+	    }
+	  };
+	}
+
+	function builder(node, dataSource) {
+	  var heldNode = cloneNode(node);
+	  node.parentNode.removeChild(node);
+	  dataSource.forEach(buildNewItem(heldNode));
+	  document.getElementById('resultId').appendChild(fragment);
+	}
 
 /***/ }
 /******/ ]);
