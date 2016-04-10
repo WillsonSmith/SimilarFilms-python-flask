@@ -65,7 +65,7 @@
 	var voteDispatcher = (0, _dispatcher2.default)();
 
 	localforage.getItem('favourited', function (data) {
-	  _movieStore2.default.movies = data;
+	  _movieStore2.default.movies = data || {};
 	  var movieStoreKeys = Object.keys(_movieStore2.default.movies);
 	  movieStoreKeys.forEach(function (key) {
 	    var movieItem = document.querySelector('[data-id=\'' + key + '\']');

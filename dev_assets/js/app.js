@@ -7,7 +7,7 @@ let body = document.getElementsByTagName('body')[0];
 let voteDispatcher = Dispatcher();
 
 localforage.getItem('favourited', function(data) {
-  movieStore.movies = data;
+  movieStore.movies = data || {};
   let movieStoreKeys = Object.keys(movieStore.movies);
   movieStoreKeys.forEach(function(key) {
     let movieItem = document.querySelector(`[data-id='${key}']`);
