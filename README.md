@@ -7,7 +7,12 @@ After some consideration, I determined having the title of the film on top of th
 
 It also has been updated to use the movie title on the similar page instead of just showing the movie ID. This is more user friendly, and something that should have existed from the beginning.
 
-The build process has not been finalized or cleaned up very well, so some things are still very rough. An example of a pitfall is that the bundled components need to be minified.
+The build process right now has a `makefile` that runs `vulcanize` and `html-minifier`. While not finalized, the build process will probably continue to use a `makefile`. Things that may change include:
+
+- location of files
+- moving files from one location to another
+- handling external minification before vulcanization
+- checking if the file has already been vulcanized or minified to skip steps and reduce build time
 
 You cannot currently like films, and the "Mine" page currently does not work. The rest of the app should be functioning as intended.
 
