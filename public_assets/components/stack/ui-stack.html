@@ -1,0 +1,56 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="ui-stack">
+  <template>
+    <style>
+      :host {
+        --spacing: 8px;
+
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: -var(--spacing);
+        margin-left: -var(--spacing);
+      }
+      :host ::content>* {
+        flex: 1 1 auto;
+        margin-top: var(--spacing);
+        margin-left: var(--spacing);
+      }
+
+      :host.vertical {
+        flex-direction: column;
+      }
+
+      :host.no-wrap {
+        flex-wrap: nowrap;
+      }
+
+    </style>
+    <content></content>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'ui-stack',
+
+      properties: {
+        vertical: Boolean,
+        wrap: String
+      },
+
+      attached: function() {
+        stackItems = Array.from(this.children);
+
+        if (this.vertical) {
+          this.classList.add('vertical');
+        }
+
+        if (this.wrap == 'false') {
+          this.classList.add('no-wrap');
+        }
+      }
+
+    });
+  </script>
+</dom-module>
