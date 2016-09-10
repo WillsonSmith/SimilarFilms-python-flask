@@ -11,8 +11,8 @@ The build process has not been finalized or cleaned up very well, so some things
 
 You cannot currently like films, and the "Mine" page currently does not work. The rest of the app should be functioning as intended.
 
-![screen1](http://cl.willsonsmith.com/0a1X292K3c2E/download/IMG_1367.PNG)
-![screen2](http://cl.willsonsmith.com/080K3T1h001Q/IMG_1368.PNG)
+<img src='http://cl.willsonsmith.com/0a1X292K3c2E/download/IMG_1367.PNG' width='300'>
+<img src='http://cl.willsonsmith.com/080K3T1h001Q/IMG_1368.PNG' width='300'>
 
 **This is incomplete - the app works but has several bugs**
 
