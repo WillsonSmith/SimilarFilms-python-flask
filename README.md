@@ -12,7 +12,6 @@ The build process right now has a `makefile` that runs `vulcanize` and `html-min
 - location of files
 - moving files from one location to another
 - handling external minification before vulcanization
-- checking if the file has already been vulcanized or minified to skip steps and reduce build time
 
 You cannot currently like films, and the "Mine" page currently does not work. The rest of the app should be functioning as intended.
 
