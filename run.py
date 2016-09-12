@@ -11,17 +11,18 @@ app = Flask(__name__)
 
 API_KEY = os.environ['APIKEY']
 
+
 @app.route('/')
 def index():
     """render the index of SimilarFilms"""
-    results = get_data(path='/3/movie/popular?api_key=' + str(API_KEY)).get('results')
+    results = get_data(path='/3/movie/popular?api_key=' + str(API_KEY))
     return render_template('index.html', page='home', title='Popular Films', results=results)
 
-@app.route('/similar/<int:movie_id>')
-def similar(movie_id):
+@app.route('/similar/<int:movie_id>/<path:movie_name>')
+def similar(movie_id, movie_name):
     """render /similar/#"""
-    results = get_data(path='/3/movie/' + str(movie_id) + '/similar_movies?api_key=' + str(API_KEY)).get('results')
-    return render_template('similar.html', title='Similar To ' + str(movie_id), results=results)
+    results = get_data(path='/3/movie/' + str(movie_id) + '/similar_movies?api_key=' + str(API_KEY))
+    return render_template('similar.html', title='Similar To ' + movie_name, results=results)
 
 @app.route('/search', methods=['POST'])
 def search_data():
@@ -31,7 +32,7 @@ def search_data():
 @app.route('/search/<string:movie_name>', methods=['GET'])
 def search(movie_name):
     """render /search/#"""
-    results = get_data(path='/3/search/movie?query=' + str(movie_name) + '&api_key=' + str(API_KEY)).get('results')
+    results = get_data(path='/3/search/movie?query=' + str(movie_name) + '&api_key=' + str(API_KEY))
     return render_template('search.html', title='Similar To ' + str(movie_name), results=results)
 
 @app.route('/mine')

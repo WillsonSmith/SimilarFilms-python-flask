@@ -6,26 +6,31 @@
   </form>
 </div>
 {% include "partials/title.html" %}
-<div class="container group">
-  {% for result in results %}
-    <div class="movie-result">
-      <div class="movie-result__tweet">
-        <a href="http://twitter.com/home/?status=I'm watching {{ result.title }} because of http://similarfilms.com">Tweet</a>
-      </div>
-      <a href="{{url_for('similar', movie_id=result.id)}}" class="movie-result__image-link">
-        <img src="http://image.tmdb.org/t/p/w300/{{result.poster_path}}" alt="{{result.title}}" class="movie-result__image">
-      </a>
-      <div class="title">{{ result.title }}</div>
-      <div class="movie-result__rating-group">
-        <div class="movie-result__rating">{{ result.vote_average }}</div>
-        <div class="movie-result__favourite-button">
-          <button class="movie-result__heart" data-film="{{ result.title }}" data-id="{{ result.id }}" data-rating="{{ result.vote_average }}" data-image="{{ result.poster_path }}">
-            <svg viewBox="0 0 32 32">
-              <use xlink:href="#icon-heart"></use>
-            </svg>
-          </button>
-      </div>
-    </div>
+<div class='wrap'>
+  <div class="results">
+    {% for result_set in results %}
+      <ui-stack>
+        {% if result_set[0] %}
+          <ui-stack>
+            {% if result_set[0][0] %}
+              <s-result title="{{ result_set[0][0].title }}" poster="{{result_set[0][0].poster_path}}" movie-link="{{url_for('similar', movie_id=result_set[0][0].id, movie_name=result_set[0][0].title)}}" rating="{{ result_set[0][0].vote_average }}"></s-result>
+            {% endif %}
+            {% if result_set[0][1] %}
+              <s-result title="{{ result_set[0][1].title }}" poster="{{result_set[0][1].poster_path}}" movie-link="{{url_for('similar', movie_id=result_set[0][1].id, movie_name=result_set[0][1].title)}}" rating="{{ result_set[0][1].vote_average }}"></s-result>
+            {% endif %}
+          </ui-stack>
+        {% endif %}
+        {% if result_set[1] %}
+          <ui-stack>
+            {% if result_set[1][0] %}
+              <s-result title="{{ result_set[1][0].title }}" poster="{{result_set[1][0].poster_path}}" movie-link="{{url_for('similar', movie_id=result_set[1][0].id, movie_name=result_set[1][0].title)}}" rating="{{ result_set[1][0].vote_average }}"></s-result>
+            {% endif %}
+            {% if result_set[1][1] %}
+              <s-result title="{{ result_set[1][1].title }}" poster="{{result_set[1][1].poster_path}}" movie-link="{{url_for('similar', movie_id=result_set[1][1].id, movie_name=result_set[1][1].title)}}" rating="{{ result_set[1][1].vote_average }}"></s-result>
+            {% endif %}
+          </ui-stack>
+        {% endif %}
+      </ui-stack>
+    {% endfor %}
   </div>
-  {% endfor %}
 </div>

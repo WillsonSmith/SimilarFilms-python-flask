@@ -1,0 +1,6 @@
+{
+  "name": "SimilarFilms",
+  "short_name": "SimilarFilms",
+  "start_url": "/",
+  "display": "standalone"
+}
